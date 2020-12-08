@@ -26,7 +26,7 @@ run len state@(_, loc) prog = case loc < len of
 
 loopF :: [Int] -> [(Int,Int)] -> Maybe Int
 loopF tried []        = Nothing
-loopF tried (state:s) = let (a,b) = state in case b `elem` tried of
+loopF tried ((a,b):s) = case b `elem` tried of
   True  -> Just a
   False -> loopF (b:tried) s
 

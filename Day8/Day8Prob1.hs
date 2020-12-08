@@ -23,7 +23,7 @@ run :: (Int, Int) -> [(String,Int)] -> [(Int, Int)]
 run state@(_, loc) prog = let newState = exec state $ prog !! loc in newState : (run newState prog)
 
 loopF :: [Int] -> [(Int,Int)] -> Int
-loopF tried (state:s) = let (a,b) = state in case b `elem` tried of
+loopF tried ((a,b):s) = case b `elem` tried of
   True  -> a
   False -> loopF (b:tried) s
 
