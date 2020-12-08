@@ -1,4 +1,4 @@
-module Day8Prob2 where
+module Day8Prob1 where
 
 import System.Environment
 import System.Exit
