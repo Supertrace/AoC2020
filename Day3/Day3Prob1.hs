@@ -1,7 +1,4 @@
-module Day2Prob1 where
--- Searches through file to find two numbers summing to 2020
--- and then mutliplies them together
--- usage: Day1Prob1 filename
+module Day3Prob1 where
 
 import System.Environment
 import System.Exit
@@ -9,15 +6,14 @@ import System.IO
 import Data.List
 
 nextX :: Int -> Int -> Int -> Int
-nextX x xShift len = (x+xShift) `mod` len
+nextX x xShift len = (x + xShift) `mod` len
 
 pathCreate :: Int -> Int -> [String] -> [Char]
-pathCreate xloc (a:b:as) = ((a !! xloc) : (pathCreate (nextX xloc xshift len) as)
-pathCreate xloc [a]    = [a !! xloc] 
-pathCreate _    []     = [] 
+pathCreate xloc xShift (a:as) = let len = length a in ((a !! xloc) : (pathCreate (nextX xloc xshift len) as)
+pathCreate _    _      []     = []
 
 main :: IO()
 main = do
     args <- getArgs
-    (readFile $ head args) >>= putStrLn . show . length . filter (== '#') . pathCreate 0 1 . lines
+    (readFile $ head args) >>= putStrLn . show . length . filter (== '#') . pathCreate 0 3 . lines
     >> exitSuccess

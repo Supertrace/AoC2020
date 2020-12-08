@@ -23,9 +23,14 @@ colMap char = case char of
 deBin :: [Int] -> Int
 deBin = sum . map (\(a,b) -> b * (2^(10-a))) . zip [1..]
 
+missingFinder :: [Int] -> Int
+missingFinder lst = case find (\(a,b) -> b-a == 2) $ zip lst $ drop 1 lst of
+  Just (a,b) -> a+1
+  Nothing    -> error "oops"
+
 main :: IO()
 main = do
     args <- getArgs
-    (readFile $ head args) >>= putStrLn . show . foldr max 0 . map (deBin . bin) . lines   
+    (readFile $ head args) >>= putStrLn . show . missingFinder . sort . map (deBin . bin) . lines   
     >> exitSuccess
 --
