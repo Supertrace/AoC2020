@@ -4,6 +4,7 @@ import System.Environment
 import System.Exit
 import System.IO
 import Data.List
+import Data.Char
 
 grouper :: [String] -> [[String]]
 grouper []  = []
@@ -26,11 +27,8 @@ grpParse (mask:memStuff) = (reverse $ maskParse mask, map memParse memStuff)
 
 toBin :: Integer -> String
 toBin 0   = ""
-toBin num = charM : toBin d where
-  (d, m) = num `divMod` 2
-  charM  = case m of
-    0 -> '0'
-    1 -> '1'
+toBin num = let (d, m) = num `divMod` 2 in
+  (intToDigit $ toInt m ): toBin d
 
 comparer :: (Char, Char) -> Char
 comparer (a,b) = case a of
@@ -55,13 +53,11 @@ masker mask val = newVals where
 matches :: String -> String -> Bool
 matches s1 s2 = all charMatch $ zip s1 s2 where
   charMatch :: (Char, Char) -> Bool
-  charMatch (c1,c2) = case c1 == c2 of
-    True -> True
-    _    -> (c1 == 'x') || (c2 == 'x')
+  charMatch (c1,c2) = (c1 == c2) || (c1 == 'x') || (c2 == 'x')
 
 prevAdder :: [String] -> (String, [String], Integer) -> Integer
 prevAdder []             (pat, lst, val)   = val *  (toInteger $ length lst)
-prevAdder _              (_, [], _)        = 0
+prevAdder _              (_, [], _)        = -1
 prevAdder (toMatch:rest) a@(pat, lst, val) = case pat `matches` toMatch of
   True  -> prevAdder rest (pat, newL, val) where
              newL = filter (not . (`matches` toMatch)) lst
@@ -72,8 +68,8 @@ prevL strs num []                = (strs, num)
 prevL strs num ((pat, val):coms) = prevL newPrev (num + outcome) coms where
   outcome = prevAdder strs (pat, possList $ map possGen pat, val)
   newPrev = case outcome of
-              0 -> strs
-              _ -> pat : strs 
+              -1 -> strs
+              _  -> pat : strs 
 
 memList :: [String] -> Integer -> [(String, [(Integer,Integer)])] -> Integer
 memList _    total []                  = total
