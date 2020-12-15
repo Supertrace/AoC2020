@@ -1,4 +1,4 @@
-module Day15Prob1 where
+module Main where
 
 import System.Environment
 import System.Exit
@@ -16,7 +16,7 @@ initialize lst = let newLst = zip lst [1..] in
   (Map.fromList $ drop 1 $ reverse newLst, last newLst)
 
 play :: Int -> Int -> Map.Map Int Int -> [Int]
-play index prev mep = newVal : (((play $! (index + 1)) $! (newVal)) $! newMap) where
+play index prev mep = newVal : (play (index + 1)  (newVal) $! newMap) where
   newVal = case (Map.!?) mep prev of
              Just a -> index - a - 1
              _      -> 0
