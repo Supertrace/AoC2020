@@ -50,6 +50,7 @@ fieldF possFields (tik:rest) = fieldF newPos rest where
   zpped = zip possFields tik
   newPos = map (fieldWinnow) zpped
   fieldWinnow :: ([(String,Int,Int,Int,Int)], Int) -> [(String,Int,Int,Int,Int)]
+  fieldWinnow ([rule], _)  = [rule]
   fieldWinnow (rules, val) = filter (flip ruleC val) rules
 
 helper :: ([(String,Int,Int,Int,Int)], [Int], [[Int]]) -> ([[(String,Int,Int,Int,Int)]], [Int])

@@ -44,7 +44,6 @@ checker :: [(Int,Int,Int,Int)] -> [[Int]] -> [Int]
 checker rules vals = filter (not . isValid rules) vals' where
   vals' = concat vals
   
-
 main :: IO()
 main = do
     args <- getArgs
