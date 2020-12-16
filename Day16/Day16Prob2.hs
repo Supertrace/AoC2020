@@ -36,7 +36,8 @@ inputP :: [[String]] -> ([(String,Int,Int,Int,Int)], [Int], [[Int]])
 inputP [rule, [_,tik], (_:tix)] = (map ruleParse rule, ticketParse tik, map ticketParse tix)
 
 ruleC :: (String,Int,Int,Int,Int) -> Int -> Bool
-ruleC (_,min1,max1,min2,max2) val = (val >= min1 && val <= max1) || (val >= min2 && val <= max2)
+ruleC (_,min1,max1,min2,max2) val = check val min1 max1 || check val min2 max2 where 
+  check val smol big = val >= smol && val <= big
 
 isValid :: [(String,Int,Int,Int,Int)] -> Int -> Bool
 isValid rules val = any (flip ruleC val) rules
