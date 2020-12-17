@@ -5,3 +5,4 @@ Day15/.ghc.environment.x86_64-mingw32-8.10.2
 *.exe
 *.hi
 Day16/.ghc.environment.x86_64-mingw32-8.10.2
+*.2
