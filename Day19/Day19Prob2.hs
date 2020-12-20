@@ -1,4 +1,4 @@
-module Day6Prob1 where
+module Main where
 
 import System.Environment
 import System.Exit
