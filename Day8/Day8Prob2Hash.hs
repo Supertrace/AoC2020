@@ -49,7 +49,7 @@ evalPoss = isNothing . loopF S.empty . run (0,0)
 
 trueEnding :: [Prog] -> Int
 trueEnding progs = case find (evalPoss) progs of
-  Just prog -> fst $ last $ map fromJust $ takeWhile (isJust) $ run (0,0) prog
+  Just prog -> fst $ last $ map fromJust $ takeWhile isJust $ run (0,0) prog
   Nothing   -> error "trueEnding error"
 
 main :: IO()
