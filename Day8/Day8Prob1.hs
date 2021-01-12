@@ -4,6 +4,9 @@ import System.Environment
 import System.Exit
 import System.IO
 import Data.List
+import qualified Data.HashMap.Lazy as M
+
+type Prog = M.HashMap Int Int
 
 exec :: (Int, Int) -> (String, Int) -> (Int,Int)
 exec (acum, loc) (s, val) = case s of
